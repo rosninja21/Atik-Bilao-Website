@@ -255,12 +255,12 @@ document.addEventListener('click', function(event) {
     if (event.target.closest('.messenger-btn')) {
         event.preventDefault(); 
         
-        const fbLink = "https://www.facebook.com/share/1CQcU3DSSW/?mibextid=wwXIfr";
+        const messengerLink = "https://www.m.me/perlenegrace.raniseshubac";
         
-        window.open(fbLink, '_blank');
+        window.open(messengerLink, '_blank');
     }
 });
 
-document.addEventListener('click' ,function (event){
 
-})
+    
+
