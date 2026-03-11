@@ -1,0 +1,107 @@
+body {
+    background-color: #fff9e6;
+    font-family: 'Inter', sans-serif;
+}
+
+.booking-header {
+    text-align: center;
+    padding: 50px 20px;
+    color: #5d2a18; 
+}
+
+.search-bar {
+    max-width: 500px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.search-bar input {
+    width: 100%;
+    padding: 12px 40px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+}
+
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 60px 30px; 
+    padding: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.order-card {
+    background: #fffef8;
+    border-radius: 20px;
+    padding: 80px 20px 20px 20px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    transition: transform 0.3s, border 0.3s;
+    border: 2px solid transparent;
+}
+
+.order-card.selected {
+    border-color: #e32626;
+}
+
+.order-card.selected .add-badge {
+    background-color: #e32626;
+    color: white;
+}
+
+.dish-image-wrapper {
+    position: absolute;
+    top: -50px; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 160px;
+    height: 160px;
+}
+
+.dish-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.size-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.size-btn {
+    border: 1px solid #ddd;
+    background: white;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.size-btn.active {
+    background-color: #e32626;
+    color: white;
+    border-color: #e32626;
+}
+
+.add-badge {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    background: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    z-index: 10;
+}
