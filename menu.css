@@ -1,0 +1,33 @@
+/* Container para sa buttons */
+.combo-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+/* Style sa matag putahe nga button */
+.combo-item-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Style kon ma-click (selected) */
+.combo-item-btn.selected {
+    background-color: #ff6b6b; /* Usba ni sa imong brand color */
+    color: white;
+    border-color: #ff6b6b;
+}
+
+.selection-title {
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+}

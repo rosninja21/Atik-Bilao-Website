@@ -23,12 +23,11 @@ body {
 }
 
 .order-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 60px 30px; 
-    padding: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .order-card {
@@ -95,7 +94,6 @@ body {
     position: absolute;
     top: 10px;
     right: -10px;
-    background: white;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -104,4 +102,30 @@ body {
     justify-content: center;
     border: 1px solid #ddd;
     z-index: 10;
+}
+.add-badge.active {
+    background-color: #DC2626;
+}
+
+.add-badge.active i {
+    color: white;
+}
+.footer-actions {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#proceed-btn {
+    padding: 15px 30px;
+    align-items: ce;
+    background-color: #DC2626;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    display: none; 
 }

@@ -1,0 +1,44 @@
+.add-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;      
+    background-color: #eee;  
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.add-badge i {
+    color: #555;
+    transition: color 0.2s;
+}
+
+.add-badge.clicked {
+    background-color: red;
+}
+
+.add-badge.clicked i {
+    color: white;  
+}
+
+
+.fa-plus {
+    color: #555; 
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.fa-check {
+    color: #DC2626; 
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.fa-plus:hover, .fa-check:hover {
+    transform: scale(1.2); 
+}

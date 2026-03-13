@@ -798,6 +798,7 @@ h3 {
 
 .menu-dishes {
     display: flex;
+    width: 350px;
     overflow: visible;
     background: #FFFDF5;
     border-radius: 40px;
@@ -806,6 +807,7 @@ h3 {
     text-align: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     border: 1px solid #FFEFD5;
+    
 }
 
 .menu-dishes:hover .image-header img {
@@ -827,6 +829,8 @@ h3 {
     border: 8px solid white;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
+
+
 
 .circle-dishes-img{
     position: absolute;
