@@ -16,12 +16,12 @@ body {
     border: 1px solid gray;
     border-radius: 10px;
     max-width: 500px;
-    margin: 60px auto;
+    margin: 20px auto;
+    padding: 50px;
     gap: 40px;
     align-items: flex-start;
-    padding: 40px 20px;
     background-color: white;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+    
 }
 .checkout-details-container{
     margin-left: 350px;
@@ -36,6 +36,11 @@ a{
 input:hover{
 }
 
+.red-green-btn-wrapper{
+    margin-top: 5px;
+    margin-bottom: 5px;
+
+}
 
 .contact-icon{
     display: flex;
@@ -189,9 +194,15 @@ input, select, textarea {
 .messenger-btn-checkout:hover {
     background-color: #c41e1e;
 }
-.small-font{
+.small-font-second{
      font-size: 10px;
+     font-weight: bold;
      color: #DC2626;
+}
+.small-font-first{
+    font-size: 10px;
+    font-weight: bold;
+    color: #333 ;
 }
 .red-button{
     border: 1px solid #DC2626;

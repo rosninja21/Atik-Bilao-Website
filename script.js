@@ -278,9 +278,31 @@ function displayMenu() {
     });
 
     container.innerHTML = allCardsHTML;
+
+
+// Inside displayMenu() function:
+const noticeBtn = document.getElementById('cart-notice');
+const cartBtns = container.querySelectorAll('.cart-btn');
+
+cartBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        // Add the 'show' class to trigger the CSS transition
+        noticeBtn.classList.add('show');
+
+        // Remove it after 2 seconds
+        setTimeout(() => {
+            noticeBtn.classList.remove('show');
+        }, 2000);
+    });
+});
+
+
+
     setupFilters();
     searchDish();
 }
+
+
 
 function setupFilters() {
     const filterButtons = document.querySelectorAll('.menu-btn');
@@ -336,6 +358,9 @@ document.addEventListener('click', (e) => {
         window.location.href = "book-now.html";
     }
     if(e.target.classList.contains('book-now-menu')){
+        window.location.href="checkout.html";
+    }
+    if(e.target.classList.contains('checkout-btn')){
         window.location.href="checkout.html";
     }
 

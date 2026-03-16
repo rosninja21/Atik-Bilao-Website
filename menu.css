@@ -7,7 +7,6 @@
     margin-top: 10px;
 }
 
-/* Style sa matag putahe nga button */
 .combo-item-btn {
     padding: 6px 12px;
     font-size: 12px;
@@ -18,9 +17,8 @@
     transition: all 0.3s ease;
 }
 
-/* Style kon ma-click (selected) */
 .combo-item-btn.selected {
-    background-color: #ff6b6b; /* Usba ni sa imong brand color */
+    background-color: #ff6b6b; 
     color: white;
     border-color: #ff6b6b;
 }
@@ -56,10 +54,39 @@
 .book-now-menu:hover {
   background-color: #B91C1C; 
   box-shadow: 0 6px 12px rgba(0,0,0,0.25); 
-   transform: scale(1.1); /* Makes it 10% larger */
+   transform: scale(1.1); 
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
   z-index: 10;
 }
 .book-now-menu:active{
      transform: scale(0.95);
+}
+#cart-notice {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    visibility: hidden; 
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s;
+}
+
+#cart-notice.show {
+    visibility: visible;
+    opacity: 1;
+}
+#cart-notice {
+    transition: opacity 0.5s ease;
+    opacity: 0; /* start hidden */
 }
