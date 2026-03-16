@@ -107,6 +107,12 @@ header {
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
 }
+.book-now-white{
+  background-color: white;
+}
+.book-now-white:hover{
+  background-color: wheat;
+}
 
 .book-now:hover {
   background-color: #B91C1C; 
@@ -779,6 +785,10 @@ h3 {
   font-weight: 600;
   transition: all 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.25);
+}
+.menu-btn.active {
+    background-color: #e32626; /* red */
+    color: white;
 }
 
 .menu-btn:hover {

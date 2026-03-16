@@ -31,3 +31,35 @@
     margin-top: 10px;
     color: #333;
 }
+
+.book-now-menu{
+    padding: 10px 20px;
+    margin-left: 10px;
+    margin-right: 0;
+  background-color: #DC2626;
+  border-radius: 100px; 
+  border: 1px solid white; 
+  color: white;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
+   transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              box-shadow 0.2s ease, 
+              background-color 0.3s ease;
+  display: inline-block;
+  
+}
+
+
+.book-now-menu:hover {
+  background-color: #B91C1C; 
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25); 
+   transform: scale(1.1); /* Makes it 10% larger */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
+  z-index: 10;
+}
+.book-now-menu:active{
+     transform: scale(0.95);
+}

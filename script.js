@@ -145,7 +145,66 @@ const dishes=[{
     image:"images/2-in-1-combo.png",
     category: "combos"
 
-}
+},{
+    name: "Puto Cheese",
+    desc:"Soft steamed rice cakes topped with cheese.",
+    prices:{piece: 5},
+    image: "images/puto-cheese.png",
+    category: "desserts"
+},{
+     name: "Pichi-Pichi ",
+    desc:"Sticky cassava dessert coated in grated coconut or cheese.",
+    prices:{piece: 5},
+    image: "images/pichi.png",
+    category: "desserts"
+},{
+     name: "Coconut Macaroons ",
+    desc:"Sweet and chewy coconut treats.",
+    prices:{pieces: 300},
+    image: "images/macaroons.png",
+    category: "desserts"
+
+},{
+     name: "Ube Jam ",
+    desc:"Rich and creamy purple yam jam.",
+    prices:{tub: 100},
+    image: "images/ube-jam.png",
+    category: "desserts"
+    
+},{ name: "Maja Blanca ",
+    desc:"Coconut milk pudding with corn kernels.",
+    prices:{tub: 100},
+    image: "images/maja.png",
+    category: "desserts"
+    },{
+        name: "Mango Float ",
+    desc:"Layers of graham crackers, cream, and fresh mangoes.",
+    prices:{tub: 100},
+    image: "images/mango-float.png",
+    category: "desserts"
+    },{
+        name: "Torta ",
+    desc:"Traditional sponge cake, perfect for coffee or tea.",
+    prices:{small: 230, large: 280},
+    image: "images/torta.png",
+    category: "desserts"
+    },{
+        name: "Biko ",
+    desc:"Sweet sticky rice cake topped with latik (coconut curd).",
+    prices:{small: 200, medium: 300, large: 500},
+    image: "images/biko.png",
+    category: "desserts"
+    },{
+        name: "Suman ",
+    desc:"Sticky rice cake wrapped in banana leaves (Tam-is or Bud-bud).",
+    prices:{piece: 7},
+    image: "images/suman.png",
+    category: "desserts"
+    }
+
+    
+
+
 
 
 
@@ -207,7 +266,7 @@ function displayMenu() {
                         <div class="price-list">${pricesHTML}</div>
                          ${comboSelectionHTML}
                         <div class="card-actions">
-                            <button class="book-now">BOOK NOW</button>
+                            <button class="book-now-menu">BOOK NOW</button>
                             <button class="cart-btn">ADD TO CART</button>
                         </div>
                     </div> 
@@ -269,17 +328,17 @@ function toggleIcon(icon) {
 }
 
 document.addEventListener('click', (e) => {
-    // Browse Menu
     if (e.target.classList.contains('browse-menu')) {
         window.location.href = "menu.html";
     }
     
-    // Book Now
     if (e.target.classList.contains('book-now')) {
         window.location.href = "book-now.html";
     }
+    if(e.target.classList.contains('book-now-menu')){
+        window.location.href="checkout.html";
+    }
 
-    // Messenger
     if (e.target.closest('.messenger-btn')) {
         e.preventDefault();
         window.open("https://www.m.me/perlenegrace.raniseshubac", '_blank');

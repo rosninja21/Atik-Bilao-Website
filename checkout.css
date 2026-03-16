@@ -3,6 +3,7 @@ body {
     background-color: #fcfcfc;
     color: #333;
     margin: 0;
+    
 }
 
 .header-section {
@@ -11,13 +12,34 @@ body {
     margin-bottom: 40px;
 }
 
-.contact-wrapper {
-    display: flex;
-    max-width: 1200px;
+.contact-border {
+    border: 1px solid gray;
+    border-radius: 10px;
+    max-width: 500px;
     margin: 60px auto;
     gap: 40px;
     align-items: flex-start;
-    padding: 0 20px;
+    padding: 40px 20px;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.25);
+}
+.checkout-details-container{
+    margin-left: 350px;
+    margin-top: 50px;
+}
+
+a{
+    text-decoration: none;
+    color: red;
+
+}
+input:hover{
+}
+
+
+.contact-icon{
+    display: flex;
+    gap: 1pt;
 }
 
 /* Card Styling */
@@ -27,15 +49,12 @@ body {
     border-radius: 15px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
     flex: 1;
-    border: 1px solid gray;
-    
 }
 
 .form-card h3 {
     margin-top: 0;
     font-size: 1.5rem;
     color: #1a1a1a;
-    
 }
 
 .input-group {
@@ -50,13 +69,15 @@ label {
     color: #888;
     margin-bottom: 8px;
 }
+.inline-label{
+    display: inline-block;
+}
 
 input, select, textarea {
     width: 100%;
     padding: 12px;
     border: none;
-    background-color: white;
-    border: 1px solid #ccc;
+    background-color: #f8f9fa;
     border-radius: 8px;
     box-sizing: border-box; 
     font-size: 0.9rem;
@@ -100,8 +121,6 @@ input, select, textarea {
     border-radius: 12px;
     margin-bottom: 15px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-    border: 1px solid gray;
-
 }
 
 .icon-box {
@@ -132,4 +151,71 @@ input, select, textarea {
     .contact-wrapper {
         flex-direction: column;
     }
+}
+
+.payment-checkout input[type="radio"] {
+    width: auto; /* don’t make it 100% */
+    margin: 0;
+}
+
+.payment-checkout label.inline-label {
+    display: inline-block !important; /* force it inline */
+    margin-left: 5px;
+    margin-right: 20px; /* spacing between options */
+    margin-bottom: 0;
+}
+
+.messenger-btn-wrapper {
+    text-align: center;   /* centers the inline-flex button inside */
+    margin-top: 20px;     /* optional spacing */
+}
+
+.messenger-btn-checkout {
+    display: inline-flex;       /* icon + text in a row */
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    background-color: #e32626;
+    color: white;
+    padding: 10px 165px;         /* vertical + horizontal padding */
+    border: none;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    margin-bottom: 50px;
+}
+
+.messenger-btn-checkout:hover {
+    background-color: #c41e1e;
+}
+.small-font{
+     font-size: 10px;
+     color: #DC2626;
+}
+.red-button{
+    border: 1px solid #DC2626;
+    border-radius: 2px;
+    color: #DC2626;
+    padding: 2px;
+}
+.red-button:hover{
+    background-color: #DC2626;
+    color: white;
+}
+.green-button{
+    border: 1px solid #1D8957;
+    border-radius: 2px;
+    color: #1D8957;
+    padding: 2px;
+}
+.green-button:hover{
+    background-color: #1D8957;
+    color: white;
+}
+.payment-option {
+    border: 1px solid #ccc;  
+    padding: 10px 15px;       
+    border-radius: 8px;       
+    margin-bottom: 10px;      
 }
