@@ -32,6 +32,7 @@ window.addEventListener('DOMContentLoaded', () => {
         .catch(error => console.error(error));
 
     displayMenu();
+    loadCheckoutItem();
 });
 
 
@@ -39,35 +40,41 @@ const dishes=[{
     name:"Fried Chicken",
     desc: "Crispy, golden-brown fried chicken perfect for sharing.",
     prices: {small: 300, medium: 400, large: 600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/friedchicken.png",
     category: "../main"
 }, {name: "Pancit Bam-I",
     desc: "A Cebuano noodle dish featuring a combination of pancit canton and sotanghon.",
     prices: {small: 300, medium: 400, large: 600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/pancit-bam-e.png",
     category: "main"
 }, {
     name: "Pancit Sotanghon",
     desc: "Stir-fried cellophane noodles with meat and vegetables.",
     prices: {small: 300, medium: 450, large: 650},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/pancit-sotanghon.png",
     category: "main"
 },{
     name: "Pork Lollipop",
     desc: "Breaded and fried pork lollipops, a favorite for kids and adults alike.",
     prices: {medium: 400, large: 600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/pork-lollipop.png",
     category: "main"
 }, {
     name: "Buttered Shrimp",
     desc: "Juicy shrimp cooked in rich butter and garlic sauce.",
     prices: {medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/buttered-shrimp.png",
     category: "main"
 }, {
     name: "Pork Laroca",
     desc: "Savory pork dish cooked to perfection.",
     prices: {small: 300, medium: 400, large: 600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/laroca-img.png",
     category: "main"
 
@@ -75,12 +82,14 @@ const dishes=[{
     name: "Fish Fillet",
     desc: "Breaded fish fillet, crispy on the outside and tender on the inside.",
     prices: {medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/fish-fillet.png",
     category: "main"
 },{
     name: "Cordon Bleu",
     desc: "Breaded meat wrapped around cheese and ham, fried to perfection.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/cordon-bleu.png",
     category: "main"
 }, {
@@ -101,6 +110,7 @@ const dishes=[{
      name: "Pork Humba",
     desc: "Braised pork belly with a sweet and savory sauce.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/pork-humba.png",
     category: "main"
 
@@ -108,12 +118,14 @@ const dishes=[{
     name: "Chicken Fillet",
     desc: "Fried spring rolls filled with fresh vegetables.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/chicken-fillet.png",
     category: "main"
 },{
     name: "Pork Meatballs (Bola-bola)",
     desc: "Delicious fried pork meatballs.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/bola-img.png",
     category: "main"
 
@@ -128,6 +140,7 @@ const dishes=[{
      name: "Chopsuey",
     desc: "Stir-fried mixed vegetables with meat or seafood.",
     prices: {medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/chapsuey-img.png",
     category: "main"
 
@@ -264,6 +277,23 @@ function displayMenu() {
                         <h4 class="dish-name">${dish.name}</h4>   
                         <p class="description">${dish.desc}</p>
                         <div class="price-list">${pricesHTML}</div>
+
+                                       <div class="sizes-buttons-grid">
+                        ${dish.contents ? dish.contents.map(size => `
+    <button type="button" class="sizes-btn ${size.toLowerCase() === 'small' ? 'selected' : ''}" onclick="this.classList.toggle('selected')">
+        ${size}
+    </button>
+`).join('') : ''}
+                    </div>
+
+        <div class="counter-wrapper">
+            <button type="button" class="decrement operator" onclick="changeCount(this, -1)">-</button> 
+            <div class="counter">1</div>
+            <button type="button" class="increment operator" onclick="changeCount(this, 1)">+</button> 
+
+        </div>
+
+                        
                          ${comboSelectionHTML}
                         <div class="card-actions">
                             <button class="book-now-menu">BOOK NOW</button>
@@ -279,17 +309,27 @@ function displayMenu() {
 
     container.innerHTML = allCardsHTML;
 
+document.querySelectorAll('.sizes-buttons-grid').forEach(grid => {
+    const buttons = grid.querySelectorAll('.sizes-btn');
+    buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            buttons.forEach(b => b.classList.remove('selected')); 
+            btn.classList.add('selected'); 
+        });
+    });
+});
 
-// Inside displayMenu() function:
+
+
+
 const noticeBtn = document.getElementById('cart-notice');
 const cartBtns = container.querySelectorAll('.cart-btn');
 
 cartBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
-        // Add the 'show' class to trigger the CSS transition
+
         noticeBtn.classList.add('show');
 
-        // Remove it after 2 seconds
         setTimeout(() => {
             noticeBtn.classList.remove('show');
         }, 2000);
@@ -300,7 +340,94 @@ cartBtns.forEach((btn) => {
 
     setupFilters();
     searchDish();
+    getItemsBooknow()
 }
+
+
+function changeCount(button, value) {
+    const parent = button.parentElement;
+    
+    const counterDisplay = parent.querySelector('.counter');
+    
+    let currentNum = parseInt(counterDisplay.innerText);
+    let newNum = currentNum + value;
+    
+    if (newNum < 1) newNum = 1;
+    
+    counterDisplay.innerText = newNum;
+}
+
+
+
+function getItemsBooknow(){ 
+    const booknowBtn = document.querySelectorAll(".book-now-menu");
+
+    booknowBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+
+            const dishCard = btn.closest('.menu-dishes');
+
+            const name = dishCard.querySelector('.dish-name').textContent;
+
+            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
+            const size = sizeBtn ? sizeBtn.textContent : null;
+
+            if (!size) {
+                alert("Please select a size first!");
+                return;
+            }
+
+            const dishData = dishes.find(d => d.name === name);
+            let price = 0;
+
+            if (dishData && dishData.prices) {
+                price = dishData.prices[size.toLowerCase()] || 0;
+            }
+
+            const item = {
+                name: name,
+                size: size,
+                quantity: 1,
+                price: price
+            };
+
+            localStorage.setItem("checkoutItem", JSON.stringify(item));
+
+            window.location.href = "checkout.html";
+        });
+    });
+}
+
+function getItemsAddcart(){
+    const cartBtn=document.querySelectorAll(".cart-btn");
+
+
+
+
+}
+
+function loadCheckoutItem() {
+    const data = localStorage.getItem("checkoutItem");
+
+    const container = document.querySelector(".checkout-placeholder");
+
+    if (!data) {
+        container.innerHTML = "<p>No item selected</p>";
+        return;
+    }
+
+    const item = JSON.parse(data);
+
+    const total = item.price * item.quantity;
+
+    container.innerHTML = `
+        <div class="summary-row">
+            <span>${item.name} (${item.size}) x${item.quantity}</span>
+            <span>₱ ${total}</span>
+        </div>
+    `;
+}
+
 
 
 
@@ -357,9 +484,9 @@ document.addEventListener('click', (e) => {
     if (e.target.classList.contains('book-now')) {
         window.location.href = "book-now.html";
     }
-    if(e.target.classList.contains('book-now-menu')){
-        window.location.href="checkout.html";
-    }
+    // if(e.target.classList.contains('book-now-menu')){
+    //     window.location.href="checkout.html";
+    // }
     if(e.target.classList.contains('checkout-btn')){
         window.location.href="checkout.html";
     }

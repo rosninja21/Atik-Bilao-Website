@@ -1,4 +1,3 @@
-/* Container para sa buttons */
 .combo-buttons-grid {
     display: flex;
     flex-wrap: wrap;
@@ -89,4 +88,89 @@
 #cart-notice {
     transition: opacity 0.5s ease;
     opacity: 0; /* start hidden */
+}
+.sizes-btn-grid{
+     display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 10px;
+}
+.sizes-btn{
+    padding: 6px 12px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+}
+.sizes-btn.selected{
+    background-color: #DC2626; 
+    color: white;
+    border-color: white;
+
+}
+.sizes-btn.active{
+    background-color: #DC2626;
+    color: white;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.quantity-controls button {
+    padding: 5px 10px;
+    border: none;
+    background-color: #DC2626;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+.counter-wrapper {
+    display: inline-flex; 
+    align-items: center;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px; 
+    overflow: hidden; /* Para ang border-radius mo-apply sa buttons sa tumoy */
+    height: 30px; /* Limitadong gitas-on */
+}
+
+/* Ang styling sa buttons */
+.counter-wrapper button {
+    background: #f1f1f1;
+    color: #333;
+    border: none;
+    width: 28px;
+    height: 100%;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.counter-wrapper button:hover {
+    background: #e2e2e2;
+}
+
+/* Ang number sa tunga */
+.counter {
+    min-width: 30px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    background: #fff;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-left: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
 }
