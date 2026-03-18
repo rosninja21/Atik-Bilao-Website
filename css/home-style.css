@@ -44,13 +44,12 @@ header {
 }
 .navbar {
   background-color: #FEF3C7;
-  height: 50px;
+  height: 70px; /* Increase height */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 60px; /* More breathing space */
   box-shadow: 0 4px 6px rgba(0,0,0,0.25);
-  align-items: center;
   gap: 20px;
 }
 
@@ -67,8 +66,7 @@ header {
 }
 
 .logo-div img {
-  height: 50px; 
-  width: auto; 
+  height: 60px; /* Slightly bigger logo */
 }
 
 
@@ -79,10 +77,11 @@ header {
     list-style: none;
     gap: 60px;
 }
-.nav-links li a{
-    text-decoration: none;
+.nav-links li a {
+    font-size: 18px;
+    font-weight: 700;
     color: black;
-    font-size: 14px;
+    text-decoration: none;
 }
 .nav-links li a:hover {
   color: #DC2626;
@@ -118,9 +117,10 @@ header {
   background-color: #B91C1C; 
   box-shadow: 0 6px 12px rgba(0,0,0,0.25); 
 }
-.tagline-div{
-    margin-left: 100px;
-    margin-top: 50px;
+.tagline-div {
+    margin-left: 50px; /* keep your current left spacing */
+    margin-top: -60px; /* negative margin to move it up */
+    max-width: 600px;
 }
 
 .tagline-div h1 {
@@ -182,9 +182,30 @@ header {
   object-fit: cover;
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
-.hero-section{
-  display: flex;
+.circle-div {
+    width: 60px;               
+    height: 60px;              
+    border-radius: 50%;        
+    overflow: hidden;          
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;   
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
+
+.circle-div img {
+    width: 90px;              
+    height: 90px;
+    object-fit: cover;         
+}
+.hero-section {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 50px 80px; 
+}
+
 .hero-img {
     position: relative; 
     width: 500px;
@@ -287,11 +308,27 @@ header {
   transform: scale(0.95); /* Shrinks slightly when clicked */
 }
 
-.problem-solution-section{
-  display: flex;
-  background-color: white;
-  border-top-left-radius: 50px;
-  border-top-right-radius: 50px;
+.problem-solution-section {
+    display: flex;
+    justify-content: space-between; /* Space between text & image */
+    align-items: flex-start;         /* Align heading to top of image */
+    padding: 80px 100px;            /* Match hero section padding */
+    gap: 50px;                      /* Space between text and image */
+    background-color: white;
+    border-top-left-radius: 50px;
+    border-top-right-radius: 50px;
+}
+
+.stress-heading {
+    max-width: 600px;               /* Same as tagline-div */
+    margin-top: 0;                  /* Remove extra top margin */
+}
+
+.stress-img img {
+    width: 500px;                   /* Fixed width for right image */
+    height: 500px;
+    border-radius: 10%;
+    object-fit: cover;
 }
 
 h3 {
@@ -304,16 +341,7 @@ h3 {
 }
 
 
-.stress-img img{
-  margin: 100px 80px 80px 80px;
-  width: 500px;
-  height: 500px;
-  border-radius: 10%;
-}
-.stress-heading{
-  margin-top: 100px;
-  margin-right: 30px;
-}
+
 
 .box{
   margin-top: 10px;
@@ -735,12 +763,50 @@ h3 {
   align-items: center;
   background-color: #ffffff;
   padding: 12px 25px;
-  border-radius: 100px; /* This creates the "pill" shape */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Subtle soft shadow */
+  border-radius: 100px; /* Pill shape */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
-  max-width: 400px; /* Adjust based on your layout */
-  margin: 20px 400px;
-  border: 1px solid #f1f5f9; /* Very light border for definition */
+  max-width: 400px;       /* Desktop max width */
+  margin: 20px auto;      /* Center horizontally */
+  border: 1px solid #f1f5f9;
+  transition: all 0.3s ease;
+}
+
+.menu-searchbar .search-icon {
+  color: #94a3b8;
+  margin-right: 15px;
+  font-size: 18px;
+}
+
+.menu-searchbar .search-input {
+  flex: 1;                /* Fills remaining space */
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  color: #1e293b;
+}
+
+.menu-searchbar .search-input::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 1024px) {
+  .menu-searchbar {
+    max-width: 350px;
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .menu-searchbar {
+    max-width: 90%;       /* Almost full width on mobile */
+    padding: 10px 15px;
+    margin: 20px auto;    /* Keep it centered */
+  }
 }
 
 .search-icon {
@@ -947,22 +1013,23 @@ h3 {
   }
 
   .tagline-div {
-    margin-left: 0;
-    padding: 20px;
-  }
+  margin-left: 0; /* Remove extra 100px */
+  max-width: 600px; /* Limit width for readability */
+}
 
-  .tagline-div h1 {
-    font-size: 2.2rem;
-  }
+.tagline-div h1 {
+  font-size: 4.5rem; /* Slightly bigger headline */
+}
 
-  .tagline-div p {
-    font-size: 1rem;
-  }
+.tagline-div p {
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
 
-  .hero-img {
-    width: 100%;       /* Allow it to fill the container */
-    max-width: 500px;  /* But don't let it get bigger than 500px */
-    height: auto;      /* Keep aspect ratio */
+.hero-img {
+  width: 550px;  /* Bigger hero image */
+  height: auto;  /* Maintain aspect ratio */
+  margin: 0;
 }
   
 
@@ -1021,10 +1088,7 @@ h3 {
     padding: 40px 20px;
   }
 
-  .menu-searchbar {
-    margin: 20px auto;
-    max-width: 90%;
-  }
+  
 
 }
 
@@ -1133,3 +1197,41 @@ body {
 
 
 
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 15px;
+    height: auto;
+  }
+
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .tagline-div h1 {
+    font-size: 2.5rem; /* Bigger than before */
+  }
+
+  .hero-img {
+    max-width: 90%; /* Responsive */
+    height: auto;
+    margin-top: 30px;
+  }
+}
+.clear-btn{
+  padding: 10px 20px;
+    margin-left: 10px;
+    margin-right: 0;
+  background-color: #DC2626;
+  border-radius: 100px; 
+  border: 1px solid white; 
+  color: white;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
+
+}
