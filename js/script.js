@@ -272,14 +272,7 @@ function displayMenu() {
     </button>
 `).join('') : ''}
                     </div>
-
-                     <div class="counter-wrapper">
-            <button type="button" class="decrement operator" onclick="changeCount(this, -1)">-</button> 
-            <div class="counter">1</div>
-            <button type="button" class="increment operator" onclick="changeCount(this, 1)">+</button> 
-
-        </div>
-
+                    
                         
                         ${comboSelectionHTML}
 
@@ -375,40 +368,37 @@ function changeCount(button, value) {
 
 
 
-function getItemsBooknow(){ 
+function getItemsBooknow() { 
     const booknowBtn = document.querySelectorAll(".book-now-menu");
 
     booknowBtn.forEach(btn => {
         btn.addEventListener('click', () => {
-
             const dishCard = btn.closest('.menu-dishes');
 
-            const name = dishCard.querySelector('.dish-name').textContent;
+            const name = dishCard.querySelector('.dish-name').textContent.trim();
+            const counterNum = parseInt(dishCard.querySelector('.counter').textContent);
 
             const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
-            const size = sizeBtn ? sizeBtn.textContent : null;
+            const size = sizeBtn ? sizeBtn.textContent.trim() : null;
 
-            if (!size) {
-                alert("Please select a size first!");
-                return;
-            }
+           
 
             const dishData = dishes.find(d => d.name === name);
             let price = 0;
 
             if (dishData && dishData.prices) {
-                price = dishData.prices[size.toLowerCase()] || 0;
+                const key = size.toLowerCase();
+                price = dishData.prices[key] || 0;
             }
 
             const item = {
                 name: name,
                 size: size,
-                quantity: 1,
-                price: price
+                quantity: counterNum,
+                price: price 
             };
 
             localStorage.setItem("checkoutItem", JSON.stringify(item));
-
             window.location.href = "checkout.html";
         });
     });
@@ -417,6 +407,39 @@ function getItemsBooknow(){
 function getItemsAddcart(){
     const cartBtn=document.querySelectorAll(".cart-btn");
 
+        cartBtn.forEach(btn => {
+        btn.addEventListener('click', () => {
+
+            const dishCard = btn.closest('.menu-dishes');
+
+            const name = dishCard.querySelector('.dish-name').textContent;
+            const counterNum=parseInt(dishCard.querySelector('.counter').textContent);
+
+            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
+            const size = sizeBtn ? sizeBtn.textContent : null;
+
+
+            const dishData = dishes.find(d => d.name === name);
+            let price = 0;
+
+            if (dishData && dishData.prices) {
+                // I-convert ang "Small" ngadto sa "small" para mo-match sa key sa array
+                const key = size.toLowerCase(); 
+                price = dishData.prices[key] || 0;
+            }
+            const item = {
+                name: name,
+                size: size,
+                quantity: counterNum,
+                price: price,
+                total: price * counterNum
+            };
+
+            localStorage.setItem("checkoutItem", JSON.stringify(item));
+
+            window.location.href = "cart.html";
+        });
+    });
 
 
 
@@ -434,8 +457,7 @@ function loadCheckoutItem() {
 
     const item = JSON.parse(data);
 
-    const total = item.price * item.quantity;
-
+   const total = parseFloat(item.price) * parseInt(item.quantity);
     container.innerHTML = `
         <div class="summary-row">
             <span>${item.name} (${item.size}) x${item.quantity}</span>
