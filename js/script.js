@@ -264,6 +264,22 @@ function displayMenu() {
                         <h4 class="dish-name">${dish.name}</h4>
                         <p class="description">${dish.desc}</p>
                         <div class="price-list">${pricesHTML}</div>
+
+                         <div class="sizes-buttons-grid">
+                        ${dish.contents ? dish.contents.map(size => `
+    <button type="button" class="sizes-btn ${size.toLowerCase() === 'small' ? 'selected' : ''}" onclick="this.classList.toggle('selected')">
+        ${size}
+    </button>
+`).join('') : ''}
+                    </div>
+
+                     <div class="counter-wrapper">
+            <button type="button" class="decrement operator" onclick="changeCount(this, -1)">-</button> 
+            <div class="counter">1</div>
+            <button type="button" class="increment operator" onclick="changeCount(this, 1)">+</button> 
+
+        </div>
+
                         
                         ${comboSelectionHTML}
 
