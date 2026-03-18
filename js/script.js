@@ -95,14 +95,17 @@ const dishes=[{
 }, {
 
      name: "Chicken Fillet",
-    desc: "Crispy fried chicken fillet bites.",
+    desc: "Fried spring rolls filled with fresh vegetables.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/chicken-fillet.png",
+
     category: "main"
 },{
      name: "Lumpiang Shanghai",
     desc: "Filipino-style spring rolls with ground pork and vegetables.",
     prices: {small: 300 , medium: 400, large:600},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/lumpiang-shanghai.png",
     category: "main"
 
@@ -115,13 +118,6 @@ const dishes=[{
     category: "main"
 
 }, {
-    name: "Chicken Fillet",
-    desc: "Fried spring rolls filled with fresh vegetables.",
-    prices: {small: 300 , medium: 400, large:600},
-    contents:["Small", "Medium" ,"Large"],
-    image: "../images/chicken-fillet.png",
-    category: "main"
-},{
     name: "Pork Meatballs (Bola-bola)",
     desc: "Delicious fried pork meatballs.",
     prices: {small: 300 , medium: 400, large:600},
@@ -133,6 +129,7 @@ const dishes=[{
      name: "Spaghetti",
     desc: "Sweet-style Filipino spaghetti with hotdogs and ground meat.",
     prices: {medium: 300, large:500},
+    contents:["Small", "Medium" ,"Large"],
     image: "../images/spaghetti.png",
     category: "main"
 
@@ -149,12 +146,14 @@ const dishes=[{
     name: "3 in 1 Combo",
     desc: "Selection includes Laroca, Pancit, Cordon Bleu, Meatballs, Chicken Fillet, Vegetable Lumpia, Lumpiang Shanghai, or Fried Chicken.",
     contents: ["Laroca", "Pancit", "Cordon Bleu", "Meatballs", "Chicken Fillet","Vegetable Lumpia", "Lumpiang Shanghai", "Fried Chicken"],
+    prices:{set:900},
     image: "../images/3-in1-combo.png",
     category: "combos"
 
 }, {name: "2 in 1 Combo",
     desc: "Selection includes Laroca, Pancit, Cordon Bleu, Meatballs, or Vegetable Lumpia.",
     contents:["Laroca", "Pancit", "Cordon Bleu", "Meatballs", "Vegetable Lumpia"],
+    prices:{set:600},
     image:"../images/2-in-1-combo.png",
     category: "combos"
 
@@ -167,13 +166,13 @@ const dishes=[{
 },{
      name: "Pichi-Pichi ",
     desc:"Sticky cassava dessert coated in grated coconut or cheese.",
-    prices:{piece: 5},
+    prices:{piece:5},
     image: "../images/pichi.png",
     category: "desserts"
 },{
      name: "Coconut Macaroons ",
     desc:"Sweet and chewy coconut treats.",
-    prices:{pieces: 300},
+    prices:{piece: 300},
     image: "../images/macaroons.png",
     category: "desserts"
 
@@ -233,123 +232,91 @@ function displayMenu() {
     const isBookingPage = window.location.pathname.includes("book-now.html");
 
     dishes.forEach(dish => {
+        // 1. GENERATE PRICE LIST TEXT
         let pricesHTML = "";
         if (dish.prices) {
-            if (dish.prices.small) pricesHTML += `<span>Small: <b>₱ ${dish.prices.small}</b></span>`;
-            if (dish.prices.medium) pricesHTML += `<span>Medium: <b>₱ ${dish.prices.medium}</b></span>`;
-            if (dish.prices.large) pricesHTML += `<span>Large: <b>₱ ${dish.prices.large}</b></span>`;
+            Object.entries(dish.prices).forEach(([key, val]) => {
+                pricesHTML += `<span>${key.charAt(0).toUpperCase() + key.slice(1)}: <b>₱ ${val}</b></span>`;
+            });
         }
 
-        let comboSelectionHTML = "";
-        if (dish.category === "combos" && dish.contents) {
-            comboSelectionHTML = `
+        // 2. GENERATE BUTTONS GRID (Logic para sa Sizes/Tub/Piece)
+        let selectionGridHTML = "";
+        if (dish.category === "combos") {
+            // Logic para sa Combo Selection
+            selectionGridHTML = `
                 <div class="combo-selection">
-                    <p class="selection-title">Choose   <span></span>/3 :</p>
+                    <p class="selection-title">Choose <span></span>/${dish.name.includes('3') ? '3' : '2'} :</p>
                     <div class="combo-buttons-grid">
-                        ${dish.contents.map(item => `
-                            <button type="button" class="combo-item-btn" onclick="this.classList.toggle('selected')">
-                                ${item}
-                            </button>
-                        `).join('')}
-                    </div>
-                </div>`;
-        }
-
-        if (isBookingPage) {
-            allCardsHTML += `
-                <div class="menu-dishes" data-category="${dish.category}">
-                    <div class="add-badge"><i class="fa-solid fa-plus" onclick="toggleIcon(this)"></i></div>
-                    <div class="circle-dishes-img"><img src="${dish.image}" alt="${dish.name}" class="menu-img"></div>
-                    <div class="card-dishes-container">
-                        <h4 class="dish-name">${dish.name}</h4>
-                        <p class="description">${dish.desc}</p>
-                        <div class="price-list">${pricesHTML}</div>
-
-                         <div class="sizes-buttons-grid">
-                        ${dish.contents ? dish.contents.map(size => `
-    <button type="button" class="sizes-btn ${size.toLowerCase() === 'small' ? 'selected' : ''}" onclick="this.classList.toggle('selected')">
-        ${size}
-    </button>
-`).join('') : ''}
-                    </div>
-                    
-                        
-                        ${comboSelectionHTML}
-
+                        ${dish.contents.map(item => `<button type="button" class="combo-item-btn" onclick="this.classList.toggle('selected')">${item}</button>`).join('')}
                     </div>
                 </div>`;
         } else {
-            allCardsHTML += `
-                <div class="menu-dishes" data-category="${dish.category}">
-                    <div class="circle-dishes-img"><img src="${dish.image}" alt="${dish.name}" class="menu-img"></div>
-                    <div class="card-dishes-container">
-                        <h4 class="dish-name">${dish.name}</h4>   
-                        <p class="description">${dish.desc}</p>
-                        <div class="price-list">${pricesHTML}</div>
+            // Logic para sa Main and Desserts
+            const availableKeys = Object.keys(dish.prices);
+            
+            const buttonsToMake = (dish.category === "main" || dish.name === "Torta" || dish.name === "Biko") 
+                                  ? dish.contents 
+                                  : availableKeys.map(k => k.charAt(0).toUpperCase() + k.slice(1));
 
-                                       <div class="sizes-buttons-grid">
-                        ${dish.contents ? dish.contents.map(size => `
-    <button type="button" class="sizes-btn ${size.toLowerCase() === 'small' ? 'selected' : ''}" onclick="this.classList.toggle('selected')">
-        ${size}
-    </button>
-`).join('') : ''}
-                    </div>
+            if (buttonsToMake) {
+                selectionGridHTML = `<div class="sizes-buttons-grid">`;
+                buttonsToMake.forEach((size, index) => {
+                    const sizeLower = size.toLowerCase();
+                    const hasPrice = dish.prices.hasOwnProperty(sizeLower);
+                    // Default selection: ang pinakaunang key sa prices object
+                    const isDefault = sizeLower === availableKeys[0];
 
-        <div class="counter-wrapper">
-            <button type="button" class="decrement operator" onclick="changeCount(this, -1)">-</button> 
-            <div class="counter">1</div>
-            <button type="button" class="increment operator" onclick="changeCount(this, 1)">+</button> 
+                    selectionGridHTML += `
+                        <button type="button" 
+                            class="sizes-btn ${isDefault ? 'selected' : ''}" 
+                            ${!hasPrice ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''} 
+                            onclick="selectSize(this)">
+                            ${size}
+                        </button>`;
+                });
+                selectionGridHTML += `</div>`;
+            }
+        }
 
-        </div>
+        // 3. RENDER THE CARD
+        allCardsHTML += `
+            <div class="menu-dishes" data-category="${dish.category}">
+                ${isBookingPage ? `<div class="add-badge"><i class="fa-solid fa-plus" onclick="toggleIcon(this)"></i></div>` : ''}
+                <div class="circle-dishes-img"><img src="${dish.image}" alt="${dish.name}" class="menu-img"></div>
+                <div class="card-dishes-container">
+                    <h4 class="dish-name">${dish.name}</h4>
+                    <p class="description">${dish.desc}</p>
+                    <div class="price-list">${pricesHTML}</div>
+                    
+                    ${selectionGridHTML}
 
-                        
-                         ${comboSelectionHTML}
+                    ${!isBookingPage ? `
+                        <div class="counter-wrapper">
+                            <button type="button" class="decrement operator" onclick="changeCount(this, -1)">-</button> 
+                            <div class="counter">1</div>
+                            <button type="button" class="increment operator" onclick="changeCount(this, 1)">+</button> 
+                        </div>
                         <div class="card-actions">
                             <button class="book-now-menu">BOOK NOW</button>
                             <button class="cart-btn">ADD TO CART</button>
-                        </div>
-                    </div> 
-                    
-                </div>`;
-
-
-        }
+                        </div>` : ''}
+                </div>
+            </div>`;
     });
 
     container.innerHTML = allCardsHTML;
-
-document.querySelectorAll('.sizes-buttons-grid').forEach(grid => {
-    const buttons = grid.querySelectorAll('.sizes-btn');
-    buttons.forEach(btn => {
-        btn.addEventListener('click', () => {
-            buttons.forEach(b => b.classList.remove('selected')); 
-            btn.classList.add('selected'); 
-        });
-    });
-});
-
-
-
-
-const noticeBtn = document.getElementById('cart-notice');
-const cartBtns = container.querySelectorAll('.cart-btn');
-
-cartBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-
-        noticeBtn.classList.add('show');
-
-        setTimeout(() => {
-            noticeBtn.classList.remove('show');
-        }, 2000);
-    });
-});
-
-
-
     setupFilters();
     searchDish();
-    getItemsBooknow()
+    getItemsBooknow();
+    getItemsAddcart();
+}
+
+// Helper function para sa pag-switch og size
+function selectSize(btn) {
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.sizes-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
 }
 
 
@@ -374,95 +341,116 @@ function getItemsBooknow() {
     booknowBtn.forEach(btn => {
         btn.addEventListener('click', () => {
             const dishCard = btn.closest('.menu-dishes');
-
             const name = dishCard.querySelector('.dish-name').textContent.trim();
             const counterNum = parseInt(dishCard.querySelector('.counter').textContent);
-
-            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
-            const size = sizeBtn ? sizeBtn.textContent.trim() : null;
-
-           
-
             const dishData = dishes.find(d => d.name === name);
+            
+            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
+            let finalSize = "";
             let price = 0;
 
             if (dishData && dishData.prices) {
-                const key = size.toLowerCase();
-                price = dishData.prices[key] || 0;
+                if (dishData.prices.set) {
+                    finalSize = "Set";
+                    price = dishData.prices.set;
+                } else if (sizeBtn) {
+                    finalSize = sizeBtn.textContent.trim();
+                    price = dishData.prices[finalSize.toLowerCase()] || 0;
+                } else {
+                    // Fallback para sa Tub o Piece kung walay napili
+                    const firstKey = Object.keys(dishData.prices)[0];
+                    price = dishData.prices[firstKey];
+                    finalSize = firstKey.charAt(0).toUpperCase() + firstKey.slice(1);
+                }
             }
 
-            const item = {
-                name: name,
-                size: size,
-                quantity: counterNum,
-                price: price 
-            };
-
+            const item = { name, size: finalSize, quantity: counterNum, price };
             localStorage.setItem("checkoutItem", JSON.stringify(item));
             window.location.href = "checkout.html";
         });
     });
 }
 
-function getItemsAddcart(){
-    const cartBtn=document.querySelectorAll(".cart-btn");
+function getItemsAddcart() {
+    const cartBtns = document.querySelectorAll(".cart-btn");
 
-        cartBtn.forEach(btn => {
+    cartBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-
             const dishCard = btn.closest('.menu-dishes');
-
-            const name = dishCard.querySelector('.dish-name').textContent;
-            const counterNum=parseInt(dishCard.querySelector('.counter').textContent);
-
-            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
-            const size = sizeBtn ? sizeBtn.textContent : null;
-
-
+            const name = dishCard.querySelector('.dish-name').textContent.trim();
+            const counterNum = parseInt(dishCard.querySelector('.counter').textContent);
             const dishData = dishes.find(d => d.name === name);
+            const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
+
             let price = 0;
+            let finalSize = "";
 
             if (dishData && dishData.prices) {
-                // I-convert ang "Small" ngadto sa "small" para mo-match sa key sa array
-                const key = size.toLowerCase(); 
-                price = dishData.prices[key] || 0;
+                if (sizeBtn) {
+                    finalSize = sizeBtn.textContent.trim();
+                    price = dishData.prices[finalSize.toLowerCase()] || 0;
+                } else {
+                    const keys = Object.keys(dishData.prices);
+                    finalSize = keys[0]; 
+                    price = dishData.prices[finalSize];
+                    finalSize = finalSize.charAt(0).toUpperCase() + finalSize.slice(1);
+                }
             }
+
             const item = {
                 name: name,
-                size: size,
+                size: finalSize,
                 quantity: counterNum,
                 price: price,
                 total: price * counterNum
             };
 
-            localStorage.setItem("checkoutItem", JSON.stringify(item));
-
-            window.location.href = "cart.html";
+            localStorage.setItem("checkoutItem", JSON.stringify(item)); 
+            
+            window.location.href = "cart.html"; 
         });
     });
-
-
-
 }
-
 function loadCheckoutItem() {
     const data = localStorage.getItem("checkoutItem");
 
     const container = document.querySelector(".checkout-placeholder");
 
-    if (!data) {
-        container.innerHTML = "<p>No item selected</p>";
-        return;
-    }
-
     const item = JSON.parse(data);
+    const deliveryfee=100;
 
-   const total = parseFloat(item.price) * parseInt(item.quantity);
+   const subtotal = parseFloat(item.price) * parseInt(item.quantity);
+   const total=parseFloat(subtotal)+(deliveryfee);
     container.innerHTML = `
         <div class="summary-row">
             <span>${item.name} (${item.size}) x${item.quantity}</span>
-            <span>₱ ${total}</span>
+            <span>₱ ${subtotal}</span> 
         </div>
+        
+        <hr>
+
+        <div class="summary-row">
+        <span><b>Subtotal</b> </span> 
+        <span>₱ ${subtotal} </span> 
+        </div>
+
+        <div class="summary-row">
+
+        <span>Delivery Fee </span> 
+        <span>₱ ${deliveryfee} </span> 
+
+        </div>
+        
+        <div class="summary-row"> <span><h2>Total</h2> </span>
+        <span> <h2 style="color:red">${total}</h2> </span>
+       
+        
+        </div>
+        
+        
+        
+            
+
     `;
 }
 
