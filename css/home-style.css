@@ -1121,15 +1121,62 @@ body {
 /* Item Card */
 .cart-items { flex: 2; }
 
+
 .cart-card {
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    display: flex;
-    align-items: center;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-bottom: 15px;
+    display: flex;               /* para horizontal layout */
+    align-items: center;         /* vertically center content */
+    justify-content: space-between; 
+    padding: 8px 12px;           /* small padding */
+    margin-bottom: 8px;          /* space between cards */
+    border: 1px solid #ddd;      /* subtle border */
+    border-radius: 8px;          /* rounded corners */
+    background-color: #fff;      /* white background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* light shadow */
+    font-family: Arial, sans-serif;
+    font-size: 14px;             /* small text */
+    min-height: 60px;            /* fixed height for compactness */
 }
+
+.cart-card img {
+    width: 50px;                 /* small square image */
+    height: 50px;
+    object-fit: cover;           /* crop nicely */
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.cart-card .item-info {
+    flex: 1;                     /* take available space */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.cart-card .item-info span {
+    margin: 2px 0;
+}
+
+.cart-card .item-price {
+    font-weight: bold;
+    color: #e53935;             /* red color for price */
+}
+
+.cart-card .select-btn {
+    margin-left: 10px;
+    padding: 4px 8px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.cart-card .select-btn:hover {
+    background-color: #43a047;
+}
+
+
 
 .item-img { width: 100px; border-radius: 10px; margin-right: 20px; }
 
@@ -1181,7 +1228,7 @@ body {
 .total-price { color: #e32626; }
 
 .checkout-btn {
-    width: 100%;
+    width: 30%;
     background: #e32626;
     color: white;
     border: none;
@@ -1233,5 +1280,22 @@ body {
   font-weight: 600;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
+
+}
+
+
+.create-card{
+    display: flex;               /* para horizontal layout */
+    align-items: center;         /* vertically center content */
+    justify-content: space-between; 
+    padding: 8px 12px;           /* small padding */
+    margin-bottom: 8px;          /* space between cards */
+    border: 1px solid #ddd;      /* subtle border */
+    border-radius: 8px;          /* rounded corners */
+    background-color: #fff;      /* white background */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* light shadow */
+    font-family: Arial, sans-serif;
+    font-size: 14px;             /* small text */
+    min-height: 60px;  
 
 }

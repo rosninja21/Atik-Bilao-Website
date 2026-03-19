@@ -31,8 +31,14 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error(error));
 
+        document.querySelector('.clear-btn')?.addEventListener('click', () => {
+    localStorage.removeItem("cartItems");
+    loadCartItems();
+});
+
     displayMenu();
     loadCheckoutItem();
+    loadCartItems();
 });
 
 
@@ -373,54 +379,114 @@ function getItemsBooknow() {
 
 function getItemsAddcart() {
     const cartBtns = document.querySelectorAll(".cart-btn");
+    const cartNotice = document.getElementById("cart-notice");
 
     cartBtns.forEach(btn => {
         btn.addEventListener('click', () => {
+            cartNotice.classList.add("show");
+            setTimeout(() => cartNotice.classList.remove("show"), 3000);
+
             const dishCard = btn.closest('.menu-dishes');
             const name = dishCard.querySelector('.dish-name').textContent.trim();
-            const counterNum = parseInt(dishCard.querySelector('.counter').textContent);
-            const dishData = dishes.find(d => d.name === name);
             const sizeBtn = dishCard.querySelector('.sizes-btn.selected');
+            const size = sizeBtn ? sizeBtn.textContent.trim() : '';
+            const quantity = parseInt(dishCard.querySelector('.counter').textContent);
 
+            const dishData = dishes.find(d => d.name === name);
             let price = 0;
-            let finalSize = "";
-
-            if (dishData && dishData.prices) {
-                if (sizeBtn) {
-                    finalSize = sizeBtn.textContent.trim();
-                    price = dishData.prices[finalSize.toLowerCase()] || 0;
-                } else {
-                    const keys = Object.keys(dishData.prices);
-                    finalSize = keys[0]; 
-                    price = dishData.prices[finalSize];
-                    finalSize = finalSize.charAt(0).toUpperCase() + finalSize.slice(1);
+            if (dishData) {
+                if (dishData.prices.set) {
+                    price = dishData.prices.set;
+                } else if (size) {
+                    price = dishData.prices[size.toLowerCase()] || 0;
                 }
             }
 
-            const item = {
-                name: name,
-                size: finalSize,
-                quantity: counterNum,
-                price: price,
-                total: price * counterNum
-            };
+            const item = { name, size, quantity, price };
 
-            localStorage.setItem("checkoutItem", JSON.stringify(item)); 
-            
-            window.location.href = "cart.html"; 
+            // ✅ Save to localStorage instead of appending to DOM
+            const existingCart = JSON.parse(localStorage.getItem("cartItems") || "[]");
+            existingCart.push(item);
+            localStorage.setItem("cartItems", JSON.stringify(existingCart));
         });
     });
 }
-function loadCheckoutItem() {
-    const data = localStorage.getItem("checkoutItem");
 
+// function createCartItem(item){
+//     const cartCard = document.getElementById('cart-card-placeholder');
+//     if (!cartCard) return;
+
+//     const createCard = document.createElement("div");
+//     createCard.classList.add('create-card');
+
+//     const subtotal = item.price * item.quantity; // calculate subtotal here
+
+//     createCard.innerHTML = `
+//         <div class="cart-holder">
+//             <span>${item.name} (${item.size}) x${item.quantity} - ₱${subtotal}</span>
+//         </div>
+//     `;
+
+//     cartCard.appendChild(createCard);
+
+//     loadCartItems();
+// }
+
+
+function loadCartItems() {
+    const container = document.getElementById("cart-card-placeholder");
+    if (!container) return;
+
+    const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+    // Update item count
+    const countEl = document.getElementById("cart-number-placeholder");
+    if (countEl) countEl.textContent = cartItems.length;
+
+    if (cartItems.length === 0) {
+        container.innerHTML = `<p style="text-align:center; padding:20px;">Your cart is empty.</p>`;
+        return;
+    }
+
+    container.innerHTML = "";
+    cartItems.forEach((item, index) => {
+        const subtotal = item.price * item.quantity;
+        const card = document.createElement("div");
+        card.classList.add("create-card");
+        card.innerHTML = `
+            <div class="cart-holder">
+                <span>${item.name} (${item.size}) x${item.quantity} — ₱${subtotal}</span>
+            </div>
+            <button onclick="removeCartItem(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">✕</button>
+
+
+          
+        `;
+        container.appendChild(card);
+    });
+          const checkoutDiv = document.createElement("div");
+    checkoutDiv.classList.add("check-out");
+    checkoutDiv.innerHTML = `
+        <button class="checkout-btn">Proceed to Checkout</button>
+    `;
+    container.appendChild(checkoutDiv);
+
+}
+
+
+function loadCheckoutItem() {
     const container = document.querySelector(".checkout-placeholder");
+    if (!container) return; // <-- stop here if the element doesn't exist
+
+    const data = localStorage.getItem("checkoutItem");
+    if (!data) return; // stop if nothing in localStorage
 
     const item = JSON.parse(data);
-    const deliveryfee=100;
+    const deliveryfee = 100;
 
-   const subtotal = parseFloat(item.price) * parseInt(item.quantity);
-   const total=parseFloat(subtotal)+(deliveryfee);
+    const subtotal = parseFloat(item.price) * parseInt(item.quantity);
+    const total = subtotal + deliveryfee;
+
     container.innerHTML = `
         <div class="summary-row">
             <span>${item.name} (${item.size}) x${item.quantity}</span>
@@ -430,27 +496,19 @@ function loadCheckoutItem() {
         <hr>
 
         <div class="summary-row">
-        <span><b>Subtotal</b> </span> 
-        <span>₱ ${subtotal} </span> 
+            <span><b>Subtotal</b> </span> 
+            <span>₱ ${subtotal} </span> 
         </div>
 
         <div class="summary-row">
-
-        <span>Delivery Fee </span> 
-        <span>₱ ${deliveryfee} </span> 
-
+            <span>Delivery Fee </span> 
+            <span>₱ ${deliveryfee} </span> 
         </div>
         
-        <div class="summary-row"> <span><h2>Total</h2> </span>
-        <span> <h2 style="color:red">${total}</h2> </span>
-       
-        
+        <div class="summary-row">
+            <span><h2>Total</h2></span>
+            <span><h2 style="color:red">₱ ${total}</h2></span>
         </div>
-        
-        
-        
-            
-
     `;
 }
 
@@ -521,4 +579,6 @@ document.addEventListener('click', (e) => {
         e.preventDefault();
         window.open("https://www.m.me/perlenegrace.raniseshubac", '_blank');
     }
+
+    
 });
