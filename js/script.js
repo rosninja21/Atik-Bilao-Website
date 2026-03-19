@@ -412,25 +412,6 @@ function getItemsAddcart() {
     });
 }
 
-// function createCartItem(item){
-//     const cartCard = document.getElementById('cart-card-placeholder');
-//     if (!cartCard) return;
-
-//     const createCard = document.createElement("div");
-//     createCard.classList.add('create-card');
-
-//     const subtotal = item.price * item.quantity; // calculate subtotal here
-
-//     createCard.innerHTML = `
-//         <div class="cart-holder">
-//             <span>${item.name} (${item.size}) x${item.quantity} - ₱${subtotal}</span>
-//         </div>
-//     `;
-
-//     cartCard.appendChild(createCard);
-
-//     loadCartItems();
-// }
 
 
 function loadCartItems() {
@@ -439,16 +420,19 @@ function loadCartItems() {
 
     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
 
-    // Update item count
     const countEl = document.getElementById("cart-number-placeholder");
     if (countEl) countEl.textContent = cartItems.length;
+
+    const clearBtn = document.querySelector('.clear-btn');
+    if (clearBtn) clearBtn.style.display = cartItems.length === 0 ? "none" : "";
+
+    container.innerHTML = "";
 
     if (cartItems.length === 0) {
         container.innerHTML = `<p style="text-align:center; padding:20px;">Your cart is empty.</p>`;
         return;
     }
 
-    container.innerHTML = "";
     cartItems.forEach((item, index) => {
         const subtotal = item.price * item.quantity;
         const card = document.createElement("div");
@@ -458,28 +442,24 @@ function loadCartItems() {
                 <span>${item.name} (${item.size}) x${item.quantity} — ₱${subtotal}</span>
             </div>
             <button onclick="removeCartItem(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:18px;">✕</button>
-
-
-          
         `;
         container.appendChild(card);
     });
-          const checkoutDiv = document.createElement("div");
+
+    const checkoutDiv = document.createElement("div");
     checkoutDiv.classList.add("check-out");
     checkoutDiv.innerHTML = `
         <button class="checkout-btn">Proceed to Checkout</button>
     `;
     container.appendChild(checkoutDiv);
-
 }
 
 
 function loadCheckoutItem() {
     const container = document.querySelector(".checkout-placeholder");
-    if (!container) return; // <-- stop here if the element doesn't exist
-
+    if (!container) return; 
     const data = localStorage.getItem("checkoutItem");
-    if (!data) return; // stop if nothing in localStorage
+    if (!data) return; 
 
     const item = JSON.parse(data);
     const deliveryfee = 100;
