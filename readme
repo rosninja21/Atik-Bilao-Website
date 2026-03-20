@@ -1,0 +1,46 @@
+# 🍴 Atik-Bilao Website
+A catering and menu management system built with **HTML5**, **CSS3**, and **Firebase Firestore**.
+
+---
+
+## 🚀 How to Run Locally
+
+Because this project uses **JavaScript Modules** (`import`/`export`), you cannot simply double-click the `.html` files. You must run a local server.
+
+### 1. Open your Terminal
+Navigate to the project folder (`Atik-Bilao-Website`).
+
+### 2. Start the Python Server
+Copy and paste the command for your Operating System:
+
+* **macOS (MacBook):**
+    ```bash
+    python3 -m http.server 8000
+    ```
+* **Windows:**
+    ```bash
+    python -m http.server 8000
+    ```
+
+### 3. Open your Browser
+Once the terminal says "Serving HTTP," go to:
+> **[http://localhost:8000](http://localhost:8000)**
+
+---
+
+## 🛠 Tech Stack
+* **Frontend:** HTML5 / CSS3 / Vanilla JS
+* **Database:** Firebase Firestore (via CDN)
+* **Development Server:** Python `http.server`
+
+## 📂 Project Structure
+* `index.html` - The main landing page.
+* `js/firebase.js` - Firebase initialization & API keys.
+* `backend/useDishMethod.js` - Logic for fetching data from Firestore.
+* `main.js` - DOM manipulation and UI logic.
+
+---
+
+## ⚠️ Important Notes
+* **Manual Refresh:** After making changes to your code, you must manually refresh your browser to see the updates.
+* **Internet Required:** Since Firebase is loaded via CDN URLs, you must be connected to the internet for the database to load.
