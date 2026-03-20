@@ -1,41 +1,48 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Menu Page</title>
-    <link rel="stylesheet" href="../css/menu.css">
-    <link rel="stylesheet" href="../css/home-style.css">
-
-    
-</head>
-<body>
-  <div id="navbar-placeholder"></div>
-  <div class="menu-text">
-    <h1 class="menu-h1">OUR MENU</h1>
-    <p class="menu-p">Delicious bilao packages and delicacies for every occasion, <br>made with love and quality ingredients.</p>
-   </div>
+    <link rel="stylesheet" href="../css/menu.css" />
+    <link rel="stylesheet" href="../css/home-style.css" />
+  </head>
+  <body>
+    <div id="navbar-placeholder"></div>
+    <div class="menu-text">
+      <h1 class="menu-h1">OUR MENU</h1>
+      <p class="menu-p">
+        Delicious bilao packages and delicacies for every occasion, <br />made
+        with love and quality ingredients.
+      </p>
+    </div>
     <div class="menu-searchbar">
-    <i class="fa-solid fa-magnifying-glass search-icon"></i><input type="text" placeholder="Search for your favorite food..." class="search-input" name="query" > 
-  </div>
+      <i class="fa-solid fa-magnifying-glass search-icon"></i
+      ><input
+        type="text"
+        placeholder="Search for your favorite food..."
+        class="search-input"
+        name="query"
+      />
+    </div>
 
+    <div class="div-menu-buttons">
+      <button class="menu-btn active" data-filter="all">All</button>
+      <button class="menu-btn" data-filter="main">
+        Main Dishes and Platters
+      </button>
+      <button class="menu-btn" data-filter="combos">Combos</button>
+      <button class="menu-btn" data-filter="desserts">
+        Desserts and Delicacies
+      </button>
+    </div>
 
-  <div class="div-menu-buttons">
-    <button class="menu-btn active" data-filter="all">All</button>
-    <button class="menu-btn" data-filter="main">Main Dishes and Platters</button>
-    <button class="menu-btn" data-filter="combos">Combos</button>
-    <button class="menu-btn" data-filter="desserts">Desserts and Delicacies</button>
-  </div>
+    <div class="menu-dishes-grid" id="food-container"></div>
 
-
-  <div class="menu-dishes-grid" id="food-container"></div>
-
-
-   <button id="cart-notice"><i class="fa-solid fa-circle-check"></i> Item added to cart</button>
-  <div id="footer-placeholder"></div>
-
-
-  
-</body>
-<script src="../js/script.js"></script>
+    <button id="cart-notice">
+      <i class="fa-solid fa-circle-check"></i> Item added to cart
+    </button>
+    <div id="footer-placeholder"></div>
+  </body>
+  <script src="./js/script.js" type="module"></script>
 </html>
