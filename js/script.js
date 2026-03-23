@@ -492,6 +492,18 @@ function loadCheckoutItem() {
     `;
 }
 
+    
+const nameInput=document.getElementById("name");
+nameInput.addEventListener("input", () =>{
+   nameInput.value= nameInput.value.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase());
+})
+
+const phoneInput=document.getElementById("phone-number");
+phoneInput.addEventListener("input", () =>{
+    phoneInput.value=phoneInput.value.toLowerCase()
+        .replace(/\b\w/g, letter => letter.toUpperCase());
+})
+
 
 function contactButton(event){
      event.preventDefault();
@@ -506,8 +518,8 @@ function contactButton(event){
      const textError=document.getElementById("text-error");
      const category=document.getElementById("category-select");
      const select=category.value;
+     
 
-     console.log(select);
 
 
 
