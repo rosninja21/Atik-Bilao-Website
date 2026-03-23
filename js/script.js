@@ -493,6 +493,98 @@ function loadCheckoutItem() {
 }
 
 
+function contactButton(event){
+     event.preventDefault();
+
+    const formContact=document.getElementById("contact-form");
+    const nameContact=document.getElementById("name");
+     const phoneContact=document.getElementById("phone-number");
+     const textContact=document.getElementById("text");
+     const errMsg=document.querySelector(".error-msg");
+     const nameError=document.getElementById("name-error");
+     const phoneError=document.getElementById("phone-error");
+     const textError=document.getElementById("text-error");
+     const category=document.getElementById("category-select");
+     const select=category.value;
+
+     console.log(select);
+
+
+
+    const name = nameContact.value.trim();
+    const phone = phoneContact.value.trim();
+    const text= textContact.value.trim();
+
+    nameError.textContent = "";
+    phoneError.textContent = "";
+    textError.textContent = "";
+
+    let hasError= false;
+
+
+    if(name=== "" ){
+                    nameError.textContent="Please fill out this field!"
+                    errMsg.style.color="red";
+                    hasError=true;
+                    
+
+     }
+    if (  name.length > 0 && name.length <3 ){
+                   nameError.textContent=" Input must not be less than 3 characters."
+                   errMsg.style.color="red";
+                    nameContact.value="";
+                   hasError=true;
+                   
+
+
+                }
+
+    if(/\d/.test(name)){
+        nameError.textContent="Name should not contain numbers!";
+        errMsg.style.color="red";
+        nameContact.value="";
+        hasError=true;
+    }
+
+    if(phone ===""){
+        phoneError.textContent="Please fill out this field!"
+        errMsg.style.color="red";
+        hasError=true;
+        
+    }
+
+
+      if(phone.length < 11 && phone.length >0){
+        phoneError.textContent="Phone number must not be less than 11 characters!";
+        errMsg.style.color="red";
+        phoneContact.value="";
+        hasError=true;
+    }
+   
+     if(/[A-Za-z]/.test(phone)){
+        phoneError.textContent="Phone must not contain letters!";
+        errMsg.style.color="red";
+        phoneContact.value="";
+        hasError=true;
+
+    }
+
+    if(text=== ""){
+        textError.textContent="Please fill out this field!"
+        errMsg.style.color="red";
+        hasError=true;
+    }
+
+    if (hasError) {
+    document.querySelectorAll(".error-msg").forEach(el => {
+        el.style.color = "red";
+    });
+}
+
+
+
+}
+
 
 
 function setupFilters() {
@@ -555,10 +647,10 @@ document.addEventListener('click', (e) => {
         window.location.href="checkout.html";
     }
 
-    if (e.target.closest('.messenger-btn')) {
-        e.preventDefault();
-        window.open("https://www.m.me/perlenegrace.raniseshubac", '_blank');
-    }
+    // if (e.target.closest('.messenger-btn')) {
+    //     e.preventDefault();
+    //     window.open("https://www.m.me/perlenegrace.raniseshubac", '_blank');
+    // }
 
     
 });

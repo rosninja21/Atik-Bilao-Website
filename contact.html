@@ -20,7 +20,7 @@
     <div class="contact-wrapper">
         <div class="card form-card">
             <h3>Send us a Message</h3>
-            <form action="#">
+            <form id="contactform">
                 <div class="input-group">
                     <label>Inquiry Type</label>
                     <select id="category-select">
@@ -31,23 +31,29 @@
 
                 <div class="input-group">
                     <label>Your Name</label>
-                    <input type="text" placeholder="e.g. Juan dela Cruz">
+                    <input type="text" id="name" placeholder="e.g. Juan dela Cruz" required maxlength="50">
+                    <p class="error-msg" id="name-error"> </p>
                 </div>
 
                 <div class="input-group">
                     <label>Email / Phone Number</label>
-                    <input type="text" placeholder="e.g. 0946-716-4181">
+                    <input type="text" id="phone-number" placeholder="e.g. 0946-716-4181" required maxlength="11">
+                    <p class="error-msg" id="phone-error"> </p>
                 </div>
 
                 <div class="input-group">
                     <label>Message</label>
-                    <textarea rows="4" placeholder="Tell us about your order or question..."></textarea>
+                    <textarea rows="4" placeholder="Tell us about your order or question..." id="text"></textarea>
+                     <p class="error-msg" id="text-error"> </p>
                 </div>
 
-                <button type="submit" class="messenger-btn">
+                <button type="submit" class="messenger-btn" onclick="contactButton(event)">
                     <i class="fa-brands fa-facebook-messenger"></i> Send via Messenger
                 </button>
+
             </form>
+
+            
         </div>
 
         <div class="info-section">

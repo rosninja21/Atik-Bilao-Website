@@ -24,18 +24,19 @@
    </div>
 
     <div class="contact-checkout contact-border">
+        <form id="checkout-form">
        <div class="contact-icon"><div class="icon-box"><i class="fa-solid fa-phone"></i></div><h2>Contact Information</h2></div> 
         <label for="">Full Name </label>
-        <input type="text" name="" id="" placeholder="Juan Dela Cruz">
+        <input type="text" name="fullname" id="fullname" placeholder="Juan Dela Cruz" required minlength="3">
         <label for="">Phone Number</label>
-        <input type="number" placeholder="09XX-XXX-XXXX">
+        <input type="number" id="phone-number" name="phone-number" placeholder="09XX-XXX-XXXX" maxlength="11" required>
         
     </div>
 
     <div class="delivery-checkout contact-border">
         <div class="contact-icon"><div class="icon-box"><i class="fa-solid fa-location-dot"></i></div><h2>Delivery Details</h2></div>
         <label for="">Delivery/Pickup Address</label>
-        <input type="text" placeholder="Type your address here..."> 
+        <input type="text" id="address" name="address" placeholder="Type your address here..." required> 
         <div class="red-green-btn-wrapper"> <button class="red-button"><i class="fa-solid fa-location-dot"></i>Select Location on Map</button>
         
         <button class="green-button"><i class="fa-solid fa-magnifying-glass-location"></i>View Atik Bilao Location</button></div>
@@ -80,6 +81,7 @@
         <i class="fa-brands fa-facebook-messenger"></i> Checkout via Messenger
     </button>
 </div>
+</form>
     <div id="footer-placeholder"></div>
     
     
