@@ -454,55 +454,80 @@ function loadCartItems() {
     container.appendChild(checkoutDiv);
 }
 
+function proceedCheckout(){
+    const checkout=document.querySelector(".checkout-btn");
+
+    checkout.addEventListener("click", () =>{
+
+    })
+}
+
 
 function loadCheckoutItem() {
     const container = document.querySelector(".checkout-placeholder");
     if (!container) return; 
-    const data = localStorage.getItem("checkoutItem");
-    if (!data) return; 
 
-    const item = JSON.parse(data);
-    const deliveryfee = 100;
+    const cartData = localStorage.getItem("checkoutItems");
+    const singleData=localStorage.getItem("checkoutItem");
 
-    const subtotal = parseFloat(item.price) * parseInt(item.quantity);
-    const total = subtotal + deliveryfee;
+    const items= cartData ? JSON.parse(cartData) : singleData ? [JSON.parse(singleData)] : [];
+     if (items.length === 0) return;
+    
+
+    const deliveryFee = 100;
+    let subtotal = 0; 
+    let itemsHTML = "";
+
+    items.forEach(item => {
+    const itemName = item.name; 
+    const itemTotal = item.price * item.quantity;
+    subtotal += itemTotal;
+    itemsHTML += `
+        <div class="summary-row">
+            <span>${itemName} (${item.size}) x${item.quantity}</span>
+            <span>₱ ${itemTotal}</span>
+        </div>`;
+});
+
+    const total = subtotal + deliveryFee;
 
     container.innerHTML = `
-        <div class="summary-row">
-            <span>${item.name} (${item.size}) x${item.quantity}</span>
-            <span>₱ ${subtotal}</span> 
-        </div>
-        
+        ${itemsHTML}
         <hr>
-
         <div class="summary-row">
-            <span><b>Subtotal</b> </span> 
-            <span>₱ ${subtotal} </span> 
+            <span><b>Subtotal</b></span>
+            <span>₱ ${subtotal}</span>
         </div>
-
         <div class="summary-row">
-            <span>Delivery Fee </span> 
-            <span>₱ ${deliveryfee} </span> 
+            <span>Delivery Fee</span>
+            <span>₱ ${deliveryFee}</span>
         </div>
-        
         <div class="summary-row">
             <span><h2>Total</h2></span>
             <span><h2 style="color:red">₱ ${total}</h2></span>
-        </div>
-    `;
+        </div>`;
 }
 
     
 const nameInput=document.getElementById("name");
-nameInput.addEventListener("input", () =>{
+
+if(nameInput){
+    nameInput.addEventListener("input", () =>{
    nameInput.value= nameInput.value.toLowerCase().replace(/\b\w/g, letter => letter.toUpperCase());
 })
 
+}
+
 const phoneInput=document.getElementById("phone-number");
-phoneInput.addEventListener("input", () =>{
+
+if(phoneInput){
+    phoneInput.addEventListener("input", () =>{
     phoneInput.value=phoneInput.value.toLowerCase()
         .replace(/\b\w/g, letter => letter.toUpperCase());
 })
+
+}
+
 
 
 function contactButton(event){
@@ -656,7 +681,16 @@ document.addEventListener('click', (e) => {
     //     window.location.href="checkout.html";
     // }
     if(e.target.classList.contains('checkout-btn')){
-        window.location.href="checkout.html";
+         const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+
+         if(cartItems.length===0){
+            alert("Your cart is empty");
+            return;
+         }
+
+         localStorage.setItem("checkoutItems", JSON.stringify(cartItems));
+         window.location.href="checkout.html";
+    
     }
 
     // if (e.target.closest('.messenger-btn')) {
