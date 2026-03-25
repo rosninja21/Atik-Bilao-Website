@@ -297,7 +297,7 @@ header {
 }
 
 /* The "Pop" effect on hover */
-.book-now:hover, .browse-menu:hover {
+.book-now:hover, .browse-menu:hover .checkout-btn{
   transform: scale(1.1); /* Makes it 10% larger */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
   z-index: 10;
@@ -1230,6 +1230,7 @@ body {
 .checkout-btn {
     width: 30%;
     background: #e32626;
+    border: 1px solid white; 
     color: white;
     border: none;
     padding: 15px;
@@ -1238,6 +1239,12 @@ body {
     font-weight: bold;
     cursor: pointer;
     margin-top: 20px;
+}
+
+.checkout-btn:hover{
+  background-color: #B91C1C; 
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25); 
+
 }
 
 .tbd { color: #ffb800; font-weight: bold; }

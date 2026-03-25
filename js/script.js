@@ -31,8 +31,15 @@ window.addEventListener('DOMContentLoaded', () => {
         })
         .catch(error => console.error(error));
 
+         if (window.location.pathname.includes("checkout.html")) {
+        window.addEventListener('beforeunload', () => {
+            localStorage.removeItem("checkoutItem");
+            localStorage.removeItem("checkoutItems");
+        });
+    }
         document.querySelector('.clear-btn')?.addEventListener('click', () => {
     localStorage.removeItem("cartItems");
+    localStorage.removeItem("checkoutItems");
     loadCartItems();
 });
 
@@ -230,6 +237,22 @@ const dishes=[{
 
 ]
 
+function selectComboItem(btn, limit) {
+    const grid = btn.closest('.combo-buttons-grid');
+    const selected = grid.querySelectorAll('.combo-item-btn.selected');
+
+    if (btn.classList.contains('selected')) {
+        btn.classList.remove('selected');
+    } else {
+        if (selected.length >= limit) return;
+        btn.classList.add('selected');
+    }
+
+    const countSpan = btn.closest('.combo-selection').querySelector('#combo-count');
+    const newCount = grid.querySelectorAll('.combo-item-btn.selected').length;
+    if (countSpan) countSpan.textContent = newCount;
+}
+
 function displayMenu() {
     const container = document.getElementById("food-container");
     if (!container) return;
@@ -238,7 +261,6 @@ function displayMenu() {
     const isBookingPage = window.location.pathname.includes("book-now.html");
 
     dishes.forEach(dish => {
-        // 1. GENERATE PRICE LIST TEXT
         let pricesHTML = "";
         if (dish.prices) {
             Object.entries(dish.prices).forEach(([key, val]) => {
@@ -246,19 +268,17 @@ function displayMenu() {
             });
         }
 
-        // 2. GENERATE BUTTONS GRID (Logic para sa Sizes/Tub/Piece)
         let selectionGridHTML = "";
         if (dish.category === "combos") {
-            // Logic para sa Combo Selection
+             const limit = dish.name.includes('3') ? 3 : 2; 
             selectionGridHTML = `
                 <div class="combo-selection">
                     <p class="selection-title">Choose <span></span>/${dish.name.includes('3') ? '3' : '2'} :</p>
                     <div class="combo-buttons-grid">
-                        ${dish.contents.map(item => `<button type="button" class="combo-item-btn" onclick="this.classList.toggle('selected')">${item}</button>`).join('')}
+                        ${dish.contents.map(item => `<button type="button" class="combo-item-btn" onclick="selectComboItem(this,${limit})">${item}</button>`).join('')}
                     </div>
                 </div>`;
         } else {
-            // Logic para sa Main and Desserts
             const availableKeys = Object.keys(dish.prices);
             
             const buttonsToMake = (dish.category === "main" || dish.name === "Torta" || dish.name === "Biko") 
@@ -270,7 +290,6 @@ function displayMenu() {
                 buttonsToMake.forEach((size, index) => {
                     const sizeLower = size.toLowerCase();
                     const hasPrice = dish.prices.hasOwnProperty(sizeLower);
-                    // Default selection: ang pinakaunang key sa prices object
                     const isDefault = sizeLower === availableKeys[0];
 
                     selectionGridHTML += `
@@ -454,13 +473,6 @@ function loadCartItems() {
     container.appendChild(checkoutDiv);
 }
 
-function proceedCheckout(){
-    const checkout=document.querySelector(".checkout-btn");
-
-    checkout.addEventListener("click", () =>{
-
-    })
-}
 
 
 function loadCheckoutItem() {
@@ -472,6 +484,12 @@ function loadCheckoutItem() {
 
     const items= cartData ? JSON.parse(cartData) : singleData ? [JSON.parse(singleData)] : [];
      if (items.length === 0) return;
+    if (cartData) {
+    localStorage.removeItem("checkoutItems");
+} else if (singleData) {
+    localStorage.removeItem("checkoutItem");
+}
+    
     
 
     const deliveryFee = 100;
@@ -508,6 +526,38 @@ function loadCheckoutItem() {
         </div>`;
 }
 
+document.getElementById("proceed-btn")?.addEventListener("click", () => {
+    const selectedCards = document.querySelectorAll(".selected-card");
+    const items = [];
+
+    selectedCards.forEach(card => {
+        const name = card.querySelector('.dish-name').textContent.trim();
+        const dishData = dishes.find(d => d.name === name);
+        const sizeBtn = card.querySelector('.sizes-btn.selected');
+
+        let size = "";
+        let price = 0;
+
+        if (dishData && dishData.prices) {
+            if (dishData.prices.set) {
+                size = "Set";
+                price = dishData.prices.set;
+            } else if (sizeBtn) {
+                size = sizeBtn.textContent.trim();
+                price = dishData.prices[size.toLowerCase()] || 0;
+            } else {
+                const firstKey = Object.keys(dishData.prices)[0];
+                size = firstKey.charAt(0).toUpperCase() + firstKey.slice(1);
+                price = dishData.prices[firstKey];
+            }
+        }
+
+        items.push({ name, size, quantity: 1, price });
+    });
+
+    localStorage.setItem("checkoutItems", JSON.stringify(items));
+    window.location.href = "checkout.html";
+});
     
 const nameInput=document.getElementById("name");
 
