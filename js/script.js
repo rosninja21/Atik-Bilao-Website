@@ -73,14 +73,14 @@ const dishes=[{
     name: "Pork Lollipop",
     desc: "Breaded and fried pork lollipops, a favorite for kids and adults alike.",
     prices: {medium: 400, large: 600},
-    contents:["Small", "Medium" ,"Large"],
+    contents:[ "Medium" ,"Large"],
     image: "../images/pork-lollipop.png",
     category: "main"
 }, {
     name: "Buttered Shrimp",
     desc: "Juicy shrimp cooked in rich butter and garlic sauce.",
     prices: {medium: 400, large:600},
-    contents:["Small", "Medium" ,"Large"],
+    contents:[ "Medium" ,"Large"],
     image: "../images/buttered-shrimp.png",
     category: "main"
 }, {
@@ -95,7 +95,7 @@ const dishes=[{
     name: "Fish Fillet",
     desc: "Breaded fish fillet, crispy on the outside and tender on the inside.",
     prices: {medium: 400, large:600},
-    contents:["Small", "Medium" ,"Large"],
+    contents:[ "Medium" ,"Large"],
     image: "../images/fish-fillet.png",
     category: "main"
 },{
@@ -142,7 +142,7 @@ const dishes=[{
      name: "Spaghetti",
     desc: "Sweet-style Filipino spaghetti with hotdogs and ground meat.",
     prices: {medium: 300, large:500},
-    contents:["Small", "Medium" ,"Large"],
+    contents:["Medium" ,"Large"],
     image: "../images/spaghetti.png",
     category: "main"
 
@@ -150,7 +150,7 @@ const dishes=[{
      name: "Chopsuey",
     desc: "Stir-fried mixed vegetables with meat or seafood.",
     prices: {medium: 400, large:600},
-    contents:["Small", "Medium" ,"Large"],
+    contents:[ "Medium" ,"Large"],
     image: "../images/chapsuey-img.png",
     category: "main"
 
@@ -177,50 +177,50 @@ const dishes=[{
     image: "../images/puto-cheese.png",
     category: "desserts"
 },{
-     name: "Pichi-Pichi ",
+     name: "Pichi-Pichi",
     desc:"Sticky cassava dessert coated in grated coconut or cheese.",
     prices:{piece:5},
     image: "../images/pichi.png",
     category: "desserts"
 },{
-     name: "Coconut Macaroons ",
+     name: "Coconut Macaroons",
     desc:"Sweet and chewy coconut treats.",
-    prices:{piece: 300},
+    prices:{set: 300},
     image: "../images/macaroons.png",
     category: "desserts"
 
 },{
-     name: "Ube Jam ",
+     name: "Ube Jam",
     desc:"Rich and creamy purple yam jam.",
     prices:{tub: 100},
     image: "../images/ube-jam.png",
     category: "desserts"
     
-},{ name: "Maja Blanca ",
+},{ name: "Maja Blanca",
     desc:"Coconut milk pudding with corn kernels.",
     prices:{tub: 100},
     image: "../images/maja.png",
     category: "desserts"
     },{
-        name: "Mango Float ",
+        name: "Mango Float",
     desc:"Layers of graham crackers, cream, and fresh mangoes.",
     prices:{tub: 100},
     image: "../images/mango-float.png",
     category: "desserts"
     },{
-        name: "Torta ",
+        name: "Torta",
     desc:"Traditional sponge cake, perfect for coffee or tea.",
     prices:{small: 230, large: 280},
     image: "../images/torta.png",
     category: "desserts"
     },{
-        name: "Biko ",
+        name: "Biko",
     desc:"Sweet sticky rice cake topped with latik (coconut curd).",
     prices:{small: 200, medium: 300, large: 500},
     image: "../images/biko.png",
     category: "desserts"
     },{
-        name: "Suman ",
+        name: "Suman",
     desc:"Sticky rice cake wrapped in banana leaves (Tam-is or Bud-bud).",
     prices:{piece: 7},
     image: "../images/suman.png",
@@ -238,19 +238,20 @@ const dishes=[{
 ]
 
 function selectComboItem(btn, limit) {
-    const grid = btn.closest('.combo-buttons-grid');
+    const grid = btn.parentElement; 
+    const comboSelection = grid.parentElement; 
+    const span = comboSelection.querySelector('.selection-title span');
     const selected = grid.querySelectorAll('.combo-item-btn.selected');
 
     if (btn.classList.contains('selected')) {
         btn.classList.remove('selected');
     } else {
-        if (selected.length >= limit) return;
-        btn.classList.add('selected');
+        if (selected.length < limit) {
+            btn.classList.add('selected');
+        }
     }
 
-    const countSpan = btn.closest('.combo-selection').querySelector('#combo-count');
-    const newCount = grid.querySelectorAll('.combo-item-btn.selected').length;
-    if (countSpan) countSpan.textContent = newCount;
+    span.textContent = grid.querySelectorAll('.combo-item-btn.selected').length;
 }
 
 function displayMenu() {
@@ -273,7 +274,7 @@ function displayMenu() {
              const limit = dish.name.includes('3') ? 3 : 2; 
             selectionGridHTML = `
                 <div class="combo-selection">
-                    <p class="selection-title">Choose <span></span>/${dish.name.includes('3') ? '3' : '2'} :</p>
+                    <p class="selection-title">Choose <span>0</span>/${dish.name.includes('3') ? '3' : '2'} :</p>
                     <div class="combo-buttons-grid">
                         ${dish.contents.map(item => `<button type="button" class="combo-item-btn" onclick="selectComboItem(this,${limit})">${item}</button>`).join('')}
                     </div>
@@ -429,6 +430,14 @@ function getItemsAddcart() {
             localStorage.setItem("cartItems", JSON.stringify(existingCart));
         });
     });
+}
+
+function removeCartItem(index){
+     const cartItems = JSON.parse(localStorage.getItem("cartItems") || "[]");
+    cartItems.splice(index, 1);
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+    loadCartItems();
+
 }
 
 

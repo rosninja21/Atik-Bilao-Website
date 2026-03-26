@@ -17,9 +17,9 @@
 }
 
 .combo-item-btn.selected {
-    background-color: #ff6b6b; 
+    background-color: #DC2626; 
     color: white;
-    border-color: #ff6b6b;
+    border: 1px solid #DC2626;
 }
 
 .selection-title {
