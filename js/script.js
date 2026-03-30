@@ -611,9 +611,9 @@ function contactButton(event){
     const phone = phoneContact.value.trim();
     const text= textContact.value.trim();
 
-    nameError.textContent = "";
-    phoneError.textContent = "";
-    textError.textContent = "";
+   [nameError, phoneError, textError].forEach(el =>{
+    if(el) el.textContent="";
+   })
 
     let hasError= false;
 
@@ -681,6 +681,188 @@ function contactButton(event){
 
 }
 
+// function checkoutButton(event){
+//     event.preventDefault();
+
+//     const fullname= document.getElementById("fullname");
+//     const phonenumber=document.getElementById("phone-number");
+//     const address=document.getElementById("address");
+//     const date=document.getElementById("address");
+//     const paymentType=document.querySelector("input[name='payment']:checked");
+//     const errMsg=document.querySelector(".error-message");
+
+//     const nameError = document.getElementById("name-error");
+//     const phoneError = document.getElementById("phone-error");
+//     const addressError = document.getElementById("address-error");
+//     const dateError = document.getElementById("date-error");
+//     const paymentError = document.getElementById("payment-error");
+
+
+//     let hasError=false;
+
+//     const valName=fullname.value.trim();
+//     const valNum=phonenumber.value.trim();
+//     const valAdd=address.value.trim();
+//     const valDate=date.value.trim();
+//     const valPay=paymentType.value.trim();
+
+
+//     if(valName==="")
+//         {
+//             nameError.textContent="Please fill out this field!";
+//             errMsg.style.color="red";
+//             hasError=true;
+//     }
+
+//      if ( valName.length > 0 && valName.length <3 ){
+//                    nameError.textContent=" Input must not be less than 3 characters."
+//                    errMsg.style.color="red";
+//                     fullname.value="";
+//                    hasError=true;
+
+//                 }
+//     if ( valName.length > 0 && valName.length <3 ){
+//                    nameError.textContent=" Input must not be less than 3 characters."
+//                    errMsg.style.color="red";
+//                     fullname.value="";
+//                    hasError=true;
+
+//                 }
+//     if(/\d/.test(valName)){
+//         nameError.textContent="Name should not contain numbers!";
+//         errMsg.style.color="red";
+//         fullname.value="";
+//         hasError=true;
+//     }
+    
+    
+
+
+//     if(valNum===""){
+//            phoneError.textContent="Please fill out this field!";
+//             errMsg.style.color="red";
+//             hasError=true;
+
+//     }
+//     if(valAdd===""){
+//            addressError.textContent="Please fill out this field!";
+//             errMsg.style.color="red";
+//             hasError=true;
+
+//     }
+
+//     if(valDate===""){
+//            dateError.textContent="Please fill out this field!";
+//             errMsg.style.color="red";
+//             hasError=true;
+
+//     }
+//     if(valNum===""){
+//            phoneError.textContent="Please fill out this field!";
+//             errMsg.style.color="red";
+//             hasError=true;
+
+//     }
+
+
+//      if (hasError) {
+//     document.querySelectorAll(".error-msg").forEach(el => {
+//         el.style.color = "red";
+//     });
+// }
+
+
+
+
+
+
+    
+
+
+
+// }
+
+function checkoutButton(event) {
+    event.preventDefault();
+
+    const fullname = document.getElementById("fullname");
+    const phonenumber = document.getElementById("phone-number");
+    const address = document.getElementById("address");
+    const date = document.getElementById("date");
+
+    const nameError = document.getElementById("name-error");
+    const phoneError = document.getElementById("phone-error");
+    const addressError = document.getElementById("address-error");
+    const dateError = document.getElementById("date-error");
+    const paymentError = document.getElementById("payment-error");
+
+    [nameError, phoneError, addressError, dateError, paymentError].forEach(el => {
+        if (el) el.textContent = "";
+    });
+
+    const valName = fullname.value.trim();
+    const valNum = phonenumber.value.trim();
+    const valAdd = address.value.trim();
+    const valDate = date.value;
+    const paymentType = document.querySelector("input[name='payment']:checked"); 
+
+    let hasError = false;
+
+    if (valName === "") {
+        nameError.textContent = "Please fill out this field!";
+        hasError = true;
+    } else if (valName.length < 3) {
+        nameError.textContent = "Input must not be less than 3 characters.";
+        fullname.value = "";
+        hasError = true;
+    } else if (/\d/.test(valName)) {
+        nameError.textContent = "Name should not contain numbers!";
+        fullname.value = "";
+        hasError = true;
+    }
+
+    if (valNum === "") {
+        phoneError.textContent = "Please fill out this field!";
+        hasError = true;
+    } else if (!/^09\d{9}$/.test(valNum)) {
+        phoneError.textContent = "Enter a valid PH number (e.g. 09171234567).";
+        hasError = true;
+    }
+
+    if (valAdd === "") {
+        addressError.textContent = "Please fill out this field!";
+        hasError = true;
+    }
+
+    if (valDate === "") {
+        dateError.textContent = "Please fill out this field!";
+        hasError = true;
+    } else {
+        const selected = new Date(valDate);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const minDate = new Date(today);
+        minDate.setDate(today.getDate() + 3);
+
+        if (selected < minDate) {
+            dateError.textContent = "Please order at least 3 days in advance.";
+            hasError = true;
+        }
+    }
+
+    if (!paymentType) {
+        paymentError.textContent = "Please select a payment method.";
+        hasError = true;
+    }
+
+    document.querySelectorAll(".error-msg").forEach(el => {
+        if (el.textContent !== "") el.style.color = "red";
+    });
+
+    if (!hasError) {
+        sendToMessenger(valName, valNum, valAdd, valDate, paymentType.id);
+    }
+}
 
 
 function setupFilters() {
