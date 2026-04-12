@@ -43,7 +43,11 @@ header {
   gap: 30px;
 }
 .navbar {
+   position: fixed;
+   width: 100%;    
+    box-sizing: border-box;
   background-color: #FEF3C7;
+  z-index: 1000;
   height: 70px; /* Increase height */
   display: flex;
   justify-content: space-between;
@@ -973,6 +977,8 @@ h3 {
 @media (max-width: 768px) {
 
   .navbar {
+    position: fixed;
+    top: 0;
     flex-direction: column;
     height: auto;
     padding: 10px;
@@ -1252,12 +1258,7 @@ body {
 
 
 @media (max-width: 768px) {
-  .navbar {
-    flex-direction: column;
-    padding: 15px;
-    height: auto;
-  }
-
+ 
   .hero-section {
     flex-direction: column;
     text-align: center;
