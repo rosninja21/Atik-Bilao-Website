@@ -7,11 +7,25 @@ window.addEventListener('DOMContentLoaded', () => {
             if (navbarPlaceholder) {
                 navbarPlaceholder.innerHTML = data;
                 
+                // Active link logic
                 const currentPage = window.location.pathname.split("/").pop() || "index.html";
                 const navLinks = navbarPlaceholder.querySelectorAll('.nav-links li a');
                 navLinks.forEach(link => {
                     if (link.getAttribute('href') === currentPage) link.classList.add('active'); 
                 });
+
+                // ✅ Hamburger logic goes HERE, after navbar is injected
+                const hamburger = document.getElementById('hamburger');
+                const navDiv = document.getElementById('nav-div');
+
+                if (hamburger && navDiv) {
+                    hamburger.addEventListener('click', () => {
+                        navDiv.classList.toggle('open');
+                        const icon = hamburger.querySelector('i');
+                        icon.classList.toggle('fa-bars');
+                        icon.classList.toggle('fa-xmark');
+                    });
+                }
             }
         });
 
@@ -47,6 +61,8 @@ window.addEventListener('DOMContentLoaded', () => {
     loadCheckoutItem();
     loadCartItems();
 });
+
+
 
 
 const dishes=[{
@@ -909,6 +925,18 @@ function toggleIcon(icon) {
 
     checkOutBtn.style.display = selectedItems.length > 0 ? "block" : "none";
 }
+
+
+const hamburger = document.getElementById('hamburger');
+    const navDiv = document.getElementById('nav-div');
+
+    hamburger.addEventListener('click', () => {
+        navDiv.classList.toggle('open');
+
+        const icon = hamburger.querySelector('i');
+        icon.classList.toggle('fa-bars');
+        icon.classList.toggle('fa-xmark');
+    });
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('browse-menu')) {
