@@ -927,16 +927,6 @@ function toggleIcon(icon) {
 }
 
 
-const hamburger = document.getElementById('hamburger');
-    const navDiv = document.getElementById('nav-div');
-
-    hamburger.addEventListener('click', () => {
-        navDiv.classList.toggle('open');
-
-        const icon = hamburger.querySelector('i');
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-xmark');
-    });
 
 document.addEventListener('click', (e) => {
     if (e.target.classList.contains('browse-menu')) {
