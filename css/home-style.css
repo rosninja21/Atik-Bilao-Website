@@ -290,6 +290,16 @@ header {
 .circle-img {
   animation: float 4s ease-in-out infinite;
 }
+.browse-menu {
+  padding: 12px 25px;
+  border-radius: 50px;
+  border: 1px solid white;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #fff;
+  color: black;
+  display: inline-block; /* IMPORTANT */
+}
 
 /* Base button styles - ensuring they are ready to animate */
 .book-now, .browse-menu {
@@ -301,7 +311,7 @@ header {
 }
 
 /* The "Pop" effect on hover */
-.book-now:hover, .browse-menu:hover .checkout-btn{
+.book-now:hover, .browse-menu:hover, .checkout-btn:hover{
   transform: scale(1.1); /* Makes it 10% larger */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Deeper shadow for depth */
   z-index: 10;
@@ -309,7 +319,7 @@ header {
 
 /* The "Click" effect (Active state) */
 .book-now:active, .browse-menu:active {
-  transform: scale(0.95); /* Shrinks slightly when clicked */
+  transform: scale(1.95); /* Shrinks slightly when clicked */
 }
 
 .problem-solution-section {
@@ -743,14 +753,14 @@ h3 {
 }
 .menu-text{
     text-align: center;
-    margin-top: 50px;
+    margin-top: 150px;
 }
 
 .menu-h1{
     font-family: 'Inter', sans-serif; 
   font-weight: 800;
   font-size: 3rem;  
-  line-height: 1.1;               
+  line-height: 1.1; 
   margin-bottom: 24px;
   color: #DC2626;
   text-shadow: 2px 2px 0 white;   
@@ -978,7 +988,6 @@ h3 {
 
   .navbar {
     position: fixed;
-    top: 0;
     flex-direction: column;
     height: auto;
     padding: 10px;
@@ -1290,6 +1299,9 @@ body {
   box-shadow: 0 4px 8px rgba(0,0,0,0.25); 
 
 }
+.clear-btn:hover{
+  transform: scale(1.1);
+}
 
 
 .create-card{
@@ -1306,4 +1318,55 @@ body {
     font-size: 14px;             /* small text */
     min-height: 60px;  
 
+}
+
+/* Hide hamburger on desktop */
+.hamburger {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #DC2626;
+    margin-left: auto;
+    padding: 5px 10px;
+}
+
+@media (max-width: 768px) {
+    /* Show hamburger, hide nav by default */
+    .hamburger {
+        display: block;
+    }
+
+    .nav-div {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        background-color: #FEF3C7;
+        padding: 20px 0;
+        position: absolute;
+        top: 70px; /* same as navbar height */
+        left: 0;
+        right: 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        z-index: 999;
+    }
+
+    /* Show nav when active */
+    .nav-div.open {
+        display: flex;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .navbar {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px 20px;
+    }
 }

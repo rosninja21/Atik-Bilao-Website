@@ -6,7 +6,7 @@ body {
 }
 
 .header-section {
-    margin-top: 50px;
+    margin-top: 150px;
     text-align: center;
     margin-bottom: 40px;
 }
@@ -77,10 +77,12 @@ input, select, textarea {
     align-items: center;
     gap: 10px;
     transition: background 0.3s;
+  
 }
 
 .messenger-btn:hover {
     background-color: #c41e1e;
+      transform: scale(1.1);
 }
 
 .info-section {
